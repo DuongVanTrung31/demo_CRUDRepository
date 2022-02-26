@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style th:replace="/layout :: css"></style>
+</head>
+<body>
+<div>
+    <form th:action="@{/product/search}" method="post">
+        <label>
+            <input type="text" name="name" placeholder="Nhập tên sản phẩm">
+            <button type="submit" >Tìm kiếm</button>
+        </label>
+    </form>
+</div>
+<a th:href="@{/product/create}">Create</a>
+<table id="products">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.getName()}"></td>
+        <td th:text="${product.getPrice()}"></td>
+        <td th:text="${product.getDescription()}"></td>
+        <td th:text="${product.category.name}"></td>
+        <td><a th:href="@{/product/edit/{id}(id=${product.getId()})}">Edit</a></td>
+        <td><a th:href="@{/product/delete/{id}(id=${product.getId()})}"
+               onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Delete</a></td>
+        <td><a th:href="@{/product/view/{id}(id=${product.getId()})}">View</a></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
